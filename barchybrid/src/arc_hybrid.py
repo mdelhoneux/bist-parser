@@ -125,6 +125,9 @@ class ArcHybridLSTM:
         left_arc_conditions = len(stack) > 0 and len(buf) > 0
         right_arc_conditions = len(stack) > 1 and stack.roots[-1].id != 0
         shift_conditions = len(buf) >0 and buf.roots[0].id != 0
+        if not train:
+            #(avoiding the multiple roots problem)
+            left_arc_conditions = left_arc_conditions and not (buf.roots[0].id == 0 and len(stack) > 1)
 
         uscrs0 = uscrs[0]
         uscrs1 = uscrs[1]
